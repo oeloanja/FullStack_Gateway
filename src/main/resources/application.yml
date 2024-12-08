@@ -1,0 +1,79 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: loan-service
+          uri: lb://LOAN-SERVICE
+          predicates:
+            - Path=/api/v1/loan-service/**
+        - id: loan-group-service
+          uri: lb://LOAN-GROUP-SERVICE
+          predicates:
+            - Path=/api/v1/loan-group-service/**
+          filters:
+            - RewritePath=/api/v1/loan-group-service/(?<segment>.*), /api/v1/loan-group-service/${segment}
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/v1/user-service/**
+#          filters:
+#            - AddResponseHeader=Access-Control-Allow-Origin, http://localhost:3000
+#            - AddResponseHeader=Access-Control-Allow-Credentials, true
+        - id: investment-service
+          uri: lb://INVESTMENT-SERVICE
+          predicates:
+            - Path=/api/v1/invest-service/**
+        - id: repayment-service
+          uri: lb://REPAYMENT-SERVICE
+          predicates:
+            - Path=/api/v1/repayment-service/**
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.cloud.gateway.route.RouteDefinitionLocator: INFO
+    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: DEBUG
+    org.springframework.cloud.loadbalancer: DEBUG
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+    register-with-eureka: true
+    fetch-registry: true
+
