@@ -1,4 +1,5 @@
 # 사전 준비
+
 ```
 eureka:
   client:
@@ -9,7 +10,6 @@ eureka:
 ```
 위의 코드를 application.yml 파일에 추가한다. <br/>
 들여쓰기 주의! server와 같은 라인으로 들어가야함 <br/>
-![image](https://github.com/user-attachments/assets/8462f77b-e7dc-44e4-9df6-de221c5861fd)
 <br/>
 <br/>
 ```
@@ -22,7 +22,6 @@ build.gradle에 위의 의존성을 추가한다.
 @EnableDiscoveryClient
 ```
 위 어노테이션을 서비스의 mainClass 위에 추가한다
-![image](https://github.com/user-attachments/assets/6440cbfc-1f52-4d6f-b1cb-0c8d6f4b9a94)
 <br/>
 ```
 dependencyManagement {
