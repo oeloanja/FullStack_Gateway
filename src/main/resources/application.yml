@@ -25,9 +25,6 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/v1/user-service/**
-#          filters:
-#            - AddResponseHeader=Access-Control-Allow-Origin, http://localhost:3000
-#            - AddResponseHeader=Access-Control-Allow-Credentials, true
         - id: investment-service
           uri: lb://INVESTMENT-SERVICE
           predicates:
@@ -36,6 +33,10 @@ spring:
           uri: lb://REPAYMENT-SERVICE
           predicates:
             - Path=/api/v1/repayment-service/**
+        - id: chatbot-proxy-service
+          uri: lb://CHATBOT-PROXY-SERVICE
+          predicates:
+            - Path=/api/v1/chat/**
 
       globalcors:
         corsConfigurations:
