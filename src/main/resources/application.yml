@@ -36,7 +36,7 @@ spring:
         - id: chatbot-proxy-service
           uri: lb://CHATBOT-PROXY-SERVICE
           predicates:
-            - Path=/api/v1/chat/**
+            - Path=/chat/**
 
       globalcors:
         corsConfigurations:
