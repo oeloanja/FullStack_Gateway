@@ -37,6 +37,10 @@ spring:
           uri: lb://CHATBOT-PROXY-SERVICE
           predicates:
             - Path=/chat/**
+        - id: credit-proxy-service
+          uri: lb://CREDIT-PROXY-SERVICE
+          predicates:
+            - Path=/api/v1/credit/**
 
       globalcors:
         corsConfigurations:
