@@ -47,6 +47,9 @@ spring:
           '[/**]':
             allowedOrigins:
               - "http://localhost:3000"
+              - "http://billit.kro.kr"
+              #- "https://billit.kro.kr"
+              - "http://34.44.246.168"
             allowedMethods:
               - GET
               - POST
