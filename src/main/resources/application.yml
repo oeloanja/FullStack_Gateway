@@ -5,40 +5,47 @@ spring:
   application:
     name: gateway-service
   cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+      service-discovery:
+        enabled: true
     gateway:
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
+      default-filters:
+        - name: PreserveHostHeader
       routes:
         - id: loan-service
-          uri: lb://LOAN-SERVICE
+          uri: http://loan-service
           predicates:
             - Path=/api/v1/loan-service/**
         - id: loan-group-service
-          uri: lb://LOAN-GROUP-SERVICE
+          uri: http://loan-group-service
           predicates:
             - Path=/api/v1/loan-group-service/**
           filters:
             - RewritePath=/api/v1/loan-group-service/(?<segment>.*), /api/v1/loan-group-service/${segment}
         - id: user-service
-          uri: lb://USER-SERVICE
+          uri: http://user-service
           predicates:
             - Path=/api/v1/user-service/**
         - id: investment-service
-          uri: lb://INVESTMENT-SERVICE
+          uri: http://invest-service
           predicates:
             - Path=/api/v1/invest-service/**
         - id: repayment-service
-          uri: lb://REPAYMENT-SERVICE
+          uri: http://repayment-service
           predicates:
             - Path=/api/v1/repayment-service/**
         - id: chatbot-proxy-service
-          uri: lb://CHATBOT-PROXY-SERVICE
+          uri: http://chatbot-proxy
           predicates:
             - Path=/chat/**
         - id: credit-proxy-service
-          uri: lb://CREDIT-PROXY-SERVICE
+          uri: http://credit-proxy
           predicates:
             - Path=/api/v1/credit/**
 
@@ -47,6 +54,9 @@ spring:
           '[/**]':
             allowedOrigins:
               - "http://localhost:3000"
+              - "http://billit.kro.kr"
+              - "https://billit.kro.kr"
+              - "http://34.44.246.168/"
             allowedMethods:
               - GET
               - POST
@@ -76,6 +86,7 @@ logging:
 eureka:
   instance:
     prefer-ip-address: true
+    hostname: gateway-service
   client:
     service-url:
       defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
