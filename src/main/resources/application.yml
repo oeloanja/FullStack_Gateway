@@ -19,33 +19,33 @@ spring:
         - name: PreserveHostHeader
       routes:
         - id: loan-service
-          uri: http://loan-service
+          uri: http://loan-service:8083
           predicates:
             - Path=/api/v1/loan-service/**
         - id: loan-group-service
-          uri: http://loan-group-service
+          uri: http://loan-group-service:8084
           predicates:
             - Path=/api/v1/loan-group-service/**
           filters:
             - RewritePath=/api/v1/loan-group-service/(?<segment>.*), /api/v1/loan-group-service/${segment}
         - id: user-service
-          uri: http://user-service
+          uri: http://user-service:8085
           predicates:
             - Path=/api/v1/user-service/**
         - id: investment-service
-          uri: http://invest-service
+          uri: http://invest-service:8081
           predicates:
             - Path=/api/v1/invest-service/**
         - id: repayment-service
-          uri: http://repayment-service
+          uri: http://repayment-service:8082
           predicates:
             - Path=/api/v1/repayment-service/**
         - id: chatbot-proxy-service
-          uri: http://chatbot-proxy
+          uri: http://chatbot-proxy:8086
           predicates:
             - Path=/chat/**
         - id: credit-proxy-service
-          uri: http://credit-proxy
+          uri: http://credit-proxy:8090
           predicates:
             - Path=/api/v1/credit/**
 
